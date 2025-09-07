@@ -1,9 +1,4 @@
-fastapi
-uvicorn
-psycopg2-binary
+streamlit
+kafka-python
 python-dotenv
 confluent-kafka
-pandas
-numpy
-scikit-learn
-joblib
