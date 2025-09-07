@@ -49,7 +49,7 @@ async def consume_transactions():
             continue
 
         try:
-            transaction_data = json.loads(msg.value().decode('utf-8'))
+            transaction_data = json.loads(msg.value().decode("utf-8"))
             logger.info(f"Transacción recibida: {transaction_data}")
             print("Transacción recibida:", transaction_data)
 
@@ -60,7 +60,7 @@ async def consume_transactions():
                 producer,
                 Config.KAFKA_TOPIC_OUTPUT,
                 key=transaction_data.get("transaction_id", ""),
-                value=json.dumps(predictions)
+                value=json.dumps(predictions),
             )
         except Exception as e:
             logger.error(f"Error procesando transacción: {str(e)}")
@@ -95,7 +95,7 @@ def health():
     Returns:
         dict: Estado de la aplicación.
     """
-    return {"status": "ok"}
+    return {"status": "Ok - Jhonattan Reales"}
 
 
 @app.get("/transaction/{transaction_id}")
@@ -120,8 +120,7 @@ def get_transaction_result(transaction_id: str):
     transaction = get_transaction(transaction_id)
     if transaction is None:
         raise HTTPException(
-            status_code=404,
-            detail="Transacción no encontrada o aún en proceso."
+            status_code=404, detail="Transacción no encontrada o aún en proceso."
         )
 
     # Se asume que la predicción del modelo 'kneighbors' se utiliza para decidir
@@ -135,8 +134,4 @@ def get_transaction_result(transaction_id: str):
     else:
         result = "sin resultado"
 
-    return {
-        "transaction_id": transaction_id,
-        "status": result,
-        "details": transaction
-    }
+    return {"transaction_id": transaction_id, "status": result, "details": transaction}
